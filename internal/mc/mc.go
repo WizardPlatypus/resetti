@@ -192,10 +192,18 @@ func isMinecraftWindow(x *x11.Client, win xproto.Window) bool {
 	// the executable is java, and that the process working directory is a
 	// valid Minecraft directory), but any false positives are weeded out when
 	// getting instance info.
-	class, err := x.GetWindowClass(win)
+	classes, err := x.GetWindowClasses(win)
 	if err != nil {
 		return false
 	}
-	// fmt.Print("Found window: ", class, "\n")
-	return strings.Contains(class, "Minecraft")
+	for _, class := range classes {
+		if class == "" {
+			continue
+		}
+		fmt.Print("Found class: ", class, "\n")
+		if strings.Contains(strings.ToLower(class), "minecraft") {
+			return true
+		}
+	}
+	return false
 }
