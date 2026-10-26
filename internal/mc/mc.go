@@ -197,10 +197,6 @@ func isMinecraftWindow(x *x11.Client, win xproto.Window) bool {
 		return false
 	}
 	for _, class := range classes {
-		if class == "" {
-			continue
-		}
-		fmt.Print("Found class: ", class, "\n")
 		if strings.Contains(strings.ToLower(class), "minecraft") {
 			return true
 		}
